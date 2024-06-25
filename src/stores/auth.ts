@@ -41,9 +41,6 @@ export const useAuthStore = defineStore('auth', {
     },
     async fetchUser() {
       try {
-        if (!this.token) {
-          throw new Error('No token available');
-        }
         const response = await axios.get('http://localhost:3000/api/auth/me', {
           headers: { Authorization: `Bearer ${this.token}` },
         });
@@ -51,7 +48,6 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         console.error('Fetching user failed:', error);
         this.logout();
-        throw error;
       }
     },
     logout() {
@@ -64,8 +60,8 @@ export const useAuthStore = defineStore('auth', {
         this.user = user;
         this.token = token;
         localStorage.setItem('token', token);
+        // this.fetchUser();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        this.fetchUser();
     },
   },
 });
