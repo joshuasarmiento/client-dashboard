@@ -27,17 +27,17 @@ const loading = ref(true);
 const user = computed(() => authStore.user);
 
 onMounted(async () => {
-if (!authStore.isAuthenticated) {
-    router.push('/login');
-} else {
-    try {
-        await authStore.fetchUser();
-    } catch {
-        console.log('Error fetching user data:', error);
-    } finally {
-        loading.value = false;
-    }
-}
+  if (!authStore.isAuthenticated) {
+      router.push('/login');
+  } else {
+      try {
+          await authStore.fetchUser();
+      } catch {
+          console.log('Error fetching user data');
+      } finally {
+          loading.value = false;
+      }
+  }
 });
 
 const handleLogout = () => {
@@ -46,6 +46,7 @@ const handleLogout = () => {
 };
 
 const goToLogin = () => {
+  authStore.logout();
   router.push('/login');
 };
 </script>

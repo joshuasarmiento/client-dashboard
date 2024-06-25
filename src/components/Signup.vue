@@ -1,18 +1,17 @@
-<!-- src/components/Signup.vue -->
 <template>
 <form @submit.prevent="handleSubmit">
     <h2>Sign Up</h2>
     <div>
-    <label for="name">Name:</label>
-    <input type="text" id="name" v-model="name" required>
+        <label for="name">Name:</label>
+        <input type="text" id="name" v-model="name" required>
     </div>
     <div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" v-model="email" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="email" required>
     </div>
     <div>
-    <label for="password">Password:</label>
-    <input type="password" id="password" v-model="password" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" v-model="password" required>
     </div>
     <button type="submit">Sign Up</button>
     <p v-if="error">{{ error }}</p>
@@ -38,8 +37,8 @@ const handleSubmit = async () => {
     error.value = '';
     try {
         await authStore.signup(email.value, password.value, name.value);
-        router.push({ path: '/dashboard' }, { replace: true });
-    } catch (error) {
+        router.push({ path: '/dashboard', replace: true });
+    } catch (err) {
         console.error('Signup failed:', err);
         error.value = 'Signup failed. Please try again.';
     } finally {
