@@ -34,14 +34,12 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
 
-  if (to.matched.some(record => record.meta.requiresAuth) && !authStore.isAuthenticated) {
-    // If the route requires authentication and the user is not authenticated, redirect to login
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next('/login');
-  } else if ((to.path === '/login' || to.path === '/signup') && authStore.isAuthenticated) {
-    // If the user is authenticated and tries to access login or signup, redirect to dashboard
+  } else if (to.meta.requiresGuest && authStore.isAuthenticated) {
     next('/dashboard');
   } else {
     next();

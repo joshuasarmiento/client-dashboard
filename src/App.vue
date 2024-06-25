@@ -1,14 +1,13 @@
 <!-- src/App.vue -->
 <template>
-  <div id="app">
+  <div id="app " class="">
     <nav v-if="isAuthenticated">
-      <router-link to="/dashboard">Dashboard</router-link> |
-      <a href="#" @click.prevent="handleLogout">Logout</a>
+      <Header/>
     </nav>
-    <nav v-else>
+    <!-- <nav v-else>
       <router-link to="/login">Login</router-link> |
       <router-link to="/signup">Signup</router-link>
-    </nav>
+    </nav> -->
     <router-view></router-view>
   </div>
 </template>
@@ -17,12 +16,12 @@
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from './stores/auth';
+import Header from '@/components/dashboard/Header.vue'
 
 const router = useRouter();
 const authStore = useAuthStore();
 
 const isAuthenticated = computed(() => authStore.isAuthenticated);
-
 const handleLogout = () => {
   authStore.logout();
   router.push('/login');

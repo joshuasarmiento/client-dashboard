@@ -1,12 +1,11 @@
 <!-- src/components/Dashboard.vue -->
 <template>
 <div>
-    <h1>Dashboard</h1>
     <div v-if="loading">Loading user data...</div>
-
     <template v-else-if="user">
-        <p>Welcome, {{ user.name || user.email }}!</p>
-        <button @click="handleLogout">Logout</button>
+        <section class="container flex items-center justify-center min-h-screen mx-auto">
+            <h1 class="font-bold text-4xl">Hello {{ user.name }}!</h1>
+        </section>
     </template>
 
     <div v-else>
@@ -26,6 +25,8 @@ const router = useRouter();
 const loading = ref(true);
 const user = computed(() => authStore.user);
 
+console.log(user.value)
+
 onMounted(async () => {
   if (!authStore.isAuthenticated) {
       router.push('/login');
@@ -39,11 +40,6 @@ onMounted(async () => {
       }
   }
 });
-
-const handleLogout = () => {
-    authStore.logout();
-    router.push('/login');
-};
 
 const goToLogin = () => {
   authStore.logout();

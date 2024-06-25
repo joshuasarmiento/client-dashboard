@@ -10,12 +10,14 @@ interface User {
 interface AuthState {
   user: User | null;
   token: string | null;
+  isAuthChecked: boolean;
 }
 
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => ({
     user: null,
     token: localStorage.getItem('token'),
+    isAuthChecked: false,
   }),
   getters: {
     isAuthenticated: (state) => !!state.token,
