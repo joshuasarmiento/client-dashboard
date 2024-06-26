@@ -1,8 +1,8 @@
 <template>
     <section class="container flex items-center justify-center min-h-screen mx-auto">
-        <Card class="w-[350px]">
+        <Card class="w-[450px] mx-auto">
             <CardHeader>
-                <CardTitle>{{ title }}</CardTitle>
+                <CardTitle class="text-xl">{{ title }}</CardTitle>
                 <CardDescription>{{ description }}</CardDescription>
             </CardHeader>
             <CardContent>
