@@ -1,41 +1,48 @@
 <template>
     <div>
         <form @submit.prevent="onSubmit">
-            <FormField v-slot="{ field, errors }" name="email">
-                <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                        <Input type="email" placeholder="Email Address" v-model="email" v-bind="field" />
-                    </FormControl>
-                    <FormMessage v-if="errors.length" class="text-xs text-red-400"> {{ errors[0] }} </FormMessage>    
-                </FormItem>
-            </FormField>
-            <FormField v-slot="{ field, errors }" name="password">
-                <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <div class="relative">
+            <div class="grid gap-3">
+                <FormField v-slot="{ field, errors }" name="email">
+                    <FormItem>
+                        <FormLabel>Email</FormLabel>
                         <FormControl>
-                        <Input 
-                            :type="showPassword ? 'text' : 'password'" 
-                            placeholder="Password" 
-                            v-model="password" 
-                            v-bind="field" 
-                        />
+                            <Input type="email" placeholder="Email Address" v-model="email" v-bind="field" />
                         </FormControl>
-                        <Button 
-                            type="button" 
-                            variant="ghost" 
-                            size="icon" 
-                            class="absolute right-0 top-0 h-full px-3 py-2"
-                            @click="togglePasswordVisibility"
-                            >
-                            <EyeIcon v-if="showPassword" class="h-4 w-4" />
-                            <EyeOffIcon v-else class="h-4 w-4" />
-                        </Button>
-                    </div>
-                    <FormMessage v-if="errors.length" class="text-xs text-red-400"> {{ errors[0] }} </FormMessage>    
-                </FormItem>
-            </FormField>
+                        <FormMessage v-if="errors.length" class="text-xs text-red-400"> {{ errors[0] }} </FormMessage>    
+                    </FormItem>
+                </FormField>
+                <FormField v-slot="{ field, errors }" name="password">
+                    <FormItem>
+                        <div class="flex items-center justify-between">
+                            <FormLabel>Password</FormLabel>
+                            <a href="#" class="ml-auto inline-block text-sm underline">
+                                Forgot your password?
+                            </a>
+                        </div>
+                        <div class="relative">
+                            <FormControl>
+                            <Input 
+                                :type="showPassword ? 'text' : 'password'" 
+                                placeholder="Password" 
+                                v-model="password" 
+                                v-bind="field" 
+                            />
+                            </FormControl>
+                            <Button 
+                                type="button" 
+                                variant="ghost" 
+                                size="icon" 
+                                class="absolute right-0 top-0 h-full px-3 py-2"
+                                @click="togglePasswordVisibility"
+                                >
+                                <EyeIcon v-if="showPassword" class="h-4 w-4" />
+                                <EyeOffIcon v-else class="h-4 w-4" />
+                            </Button>
+                        </div>
+                        <FormMessage v-if="errors.length" class="text-xs text-red-400"> {{ errors[0] }} </FormMessage>    
+                    </FormItem>
+                </FormField>
+            </div>
             <div class="py-3 text-sm">
                 <p>Don't have an account? 
                 <router-link to="/signup"> 
@@ -100,8 +107,8 @@ import {
 import { Input } from '@/components/ui/input'
 
 const formSchema = toTypedSchema(z.object({
-    email: z.string().email(),
-    password: z.string().min(6)
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
 }))
 
 const form = useForm({
