@@ -1,35 +1,35 @@
 <!-- src/components/Signup.vue -->
 <template>
     <form @submit.prevent="onSubmit">
-        <FormField v-slot="{ field }" name="name">
+        <FormField v-slot="{ field, errors }" name="name">
             <FormItem>
                 <FormLabel>Full Name</FormLabel>
                 <FormControl>
                     <Input type="text" placeholder="Enter Name" v-model="name" v-bind="field" />
                 </FormControl>
-                <!-- <FormMessage/> -->
+                <FormMessage v-if="errors.length" class="text-xs text-red-400"> {{ errors[0] }} </FormMessage>    
             </FormItem>
         </FormField>
-        <FormField v-slot="{ field }" name="email">
+        <FormField v-slot="{ field, errors }" name="email">
             <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                     <Input type="email" placeholder="Email Address" v-model="email" v-bind="field" />
                 </FormControl>
-                <!-- <FormMessage/> -->
+                <FormMessage v-if="errors.length" class="text-xs text-red-400"> {{ errors[0] }} </FormMessage>    
             </FormItem>
         </FormField>
-        <FormField v-slot="{ field }" name="password">
+        <FormField v-slot="{ field, errors }" name="password">
             <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                     <Input type="password" placeholder="Password" v-model="password" v-bind="field" />
                 </FormControl>
-                <!-- <FormMessage/> -->
+                <FormMessage v-if="errors.length" class="text-xs text-red-400"> {{ errors[0] }} </FormMessage>    
             </FormItem>
         </FormField>
         <div class="py-3 text-sm">
-            <p>Already have an account?
+            <p>Have an account already?
                 <router-link to="/login">
                     <span class="underline -px-3 font-semibold underline-offset-4 hover:text-primary">Login</span>
                 </router-link>
@@ -46,7 +46,7 @@
                 Signup
             </Button>
         </div>
-        <p class="px-4 my-4 text-center text-sm text-muted-foreground">
+        <p class="px-4 my-4 text-center text-xs text-muted-foreground">
             By clicking continue, you agree to our
             <a href="/terms" class="underline underline-offset-4 hover:text-primary">
                 Terms of Service
@@ -90,7 +90,7 @@ import {
     FormField,
     FormItem,
     FormLabel,
-    // FormMessage,
+    FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
@@ -110,13 +110,14 @@ const onSubmit = form.handleSubmit(async () => {
     try {
         await authStore.signup(email.value, password.value, name.value);
         router.push({ path: '/dashboard', replace: true });
-    } catch (err) {
+    } catch (err: any) {
+        let errorMessage = err.response.data.message || 'An unexpected error occurred.';
+
         toast({
             variant: "destructive",
             title: 'Signup failed.',
-            description: `${err}`,
+            description: errorMessage,
         });
-        console.error('Signup failed:', err);
     } finally {
         loading.value = false;
     }

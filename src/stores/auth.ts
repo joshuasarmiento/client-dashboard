@@ -28,7 +28,6 @@ export const useAuthStore = defineStore('auth', {
         const response = await axios.post('http://localhost:3000/api/auth/login', { email, password });
         this.setUserAndToken(response.data.user, response.data.token);
       } catch (error) {
-        console.error('Login failed:', error);
         throw error;
       }
     },
@@ -37,7 +36,6 @@ export const useAuthStore = defineStore('auth', {
         const response = await axios.post('http://localhost:3000/api/auth/signup', { email, password, name });
         this.setUserAndToken(response.data.user, response.data.token);
       } catch (error) {
-        console.error('Signup failed:', error);
         throw error;
       }
     },
@@ -48,7 +46,6 @@ export const useAuthStore = defineStore('auth', {
         });
         this.user = response.data.user;
       } catch (error) {
-        console.error('Fetching user failed:', error);
         this.logout();
       }
     },
