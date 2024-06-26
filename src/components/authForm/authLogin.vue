@@ -13,12 +13,7 @@
                 </FormField>
                 <FormField v-slot="{ field, errors }" name="password">
                     <FormItem>
-                        <div class="flex items-center justify-between">
-                            <FormLabel>Password</FormLabel>
-                            <a href="#" class="ml-auto inline-block text-sm underline">
-                                Forgot your password?
-                            </a>
-                        </div>
+                        <FormLabel>Password</FormLabel>
                         <div class="relative">
                             <FormControl>
                             <Input 
@@ -124,7 +119,7 @@ const onSubmit = form.handleSubmit(async () => {
         let errorMessage = err.response.data.message || 'An unexpected error occurred.';
 
         toast({
-            variant: "destructive",
+            variant: "error",
             title: 'Login failed',
             description: errorMessage,
         });

@@ -147,21 +147,17 @@ const onSubmit = form.handleSubmit(async () => {
         const response = await authStore.signup(email.value, password.value, name.value);
         if (response.status === 'User Created') {
             toast({
-                variant: "default",
+                variant: "success",
                 title: 'Signup successful!',
                 description: 'Please check your email for verification.',
             });
             
             form.resetForm();
-
-            setTimeout(() => {
-                router.push({ path: '/login', replace: true });
-            }, 5000);
         }
     } catch (err: any) {
         let errorMessage = err.response.data.message || 'An unexpected error occurred.';
         toast({
-            variant: "destructive",
+            variant: "error",
             title: 'Signup failed.',
             description: errorMessage,
         });

@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async login(email: string, password: string) {
       try {
-        const response = await axios.post('http://localhost:3000/api/auth/login', { email, password });
+        const response = await axios.post('http://localhost:3001/api/auth/login', { email, password });
         this.setUserAndToken(response.data.user, response.data.token);
       } catch (error) {
         throw error;
@@ -35,7 +35,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async signup(email: string, password: string, name: string) {
       try {
-        const response = await axios.post('http://localhost:3000/api/auth/signup', { email, password, name });
+        const response = await axios.post('http://localhost:3001/api/auth/signup', { email, password, name });
         return response.data;      
       } catch (error) {
         throw error;
@@ -43,7 +43,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async verifyEmail(token: string) {
       try {
-        const response = await axios.post('http://localhost:3000/api/auth/verify-email', { token });
+        const response = await axios.post('http://localhost:3001/api/auth/verify-email', { token });
         return response.data;
       } catch (error) {
         throw error;
@@ -51,7 +51,7 @@ export const useAuthStore = defineStore('auth', {
     },
     async fetchUser() {
       try {
-        const response = await axios.get('http://localhost:3000/api/auth/me', {
+        const response = await axios.get('http://localhost:3001/api/auth/me', {
           headers: { Authorization: `Bearer ${this.token}` },
         });
         this.user = response.data.user;

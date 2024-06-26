@@ -1,16 +1,14 @@
 <!-- src/components/Dashboard.vue -->
 <template>
 <div>
-    <div v-if="loading">
-        Loading user data...
-    </div>
-    
-    <template v-else-if="user">
-        <section class="container flex items-center justify-center min-h-screen mx-auto">
-            <h1 class="font-bold text-4xl">Hello {{ user.name }}!</h1>
-        </section>
+    <template v-if="loading">
+        <div class="container flex items-center justify-center min-h-screen mx-auto">
+            <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+        </div>
     </template>
-
+    <template v-else-if="user">
+        <SampleDashboard/>
+    </template>
     <Toaster/>
 </div>
 </template>
@@ -19,8 +17,11 @@
 import { onMounted, computed, ref } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
+import { Loader2 } from 'lucide-vue-next'
 import { useToast } from '@/components/ui/toast/use-toast'
 import { Toaster } from '@/components/ui/toast'
+// import Header from '@/components/dashboard/Header.vue'
+import SampleDashboard from '@/components/dashboard/SampleDashboard.vue'
 const { toast } = useToast()
 
 const authStore = useAuthStore();
@@ -38,7 +39,7 @@ onMounted(async () => {
           let errorMessage = err.response.data.message;
 
           toast({
-            variant: "destructive",
+            variant: "error",
             title: 'Error fetching user data',
             description: errorMessage,
         });
